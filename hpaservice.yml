@@ -1,0 +1,27 @@
+apiVersion: v1
+# Specifies the API version for this Service configuration.
+kind: Service
+# Specifies the kind of resource, which is a Service.
+
+metadata:
+  name: hpaclusterservice
+  # Assigns a name to the Service resource.
+
+  labels:
+    name: hpaservice
+    # Labels applied to the Service.
+
+spec:
+  # Specifies the specifications for the Service.
+
+  ports:
+    - port: 80
+      targetPort: 80
+      # Specifies the port mapping for the Service.
+
+  selector:
+    name: hpapod
+    # Specifies the labels used to select pods for the Service.
+
+  type: ClusterIP
+  # Specifies the type of Service, which is ClusterIP.
