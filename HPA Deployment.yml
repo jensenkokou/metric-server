@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+# Specifies the API version for this Deployment configuration.
+kind: Deployment
+# Specifies the kind of resource, which is a Deployment.
+
+metadata:
+  name: hpadeployment
+  # Assigns a name to the Deployment resource.
+
+spec:
+  replicas: 2
+  # Specifies the desired number of pod replicas.
+
+  selector:
+    matchLabels:
+      name: hpapod
+    # Specifies the labels used to select pods for this Deployment.
+
+  template:
+    metadata:
+      labels:
+        name: hpapod
+      # Labels applied to all pods created from this template.
+
+    spec:
+      # Specifies the specifications of the pod template.
+
+      containers:
+        - name: hpacontainer
+          # Specifies the name of the container.
+
+          image: k8s.gcr.io/hpa-example
+          # Specifies the container image to use.
+
+          ports:
+          - name: http
+            containerPort: 80
+            # Specifies the port mapping for the container.
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            # Specifies resource requests (minimum required resources) for the container.
+
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
+              # Specifies resource limits (maximum allowed resources) for the container.
