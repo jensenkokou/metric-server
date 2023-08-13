@@ -1,0 +1,52 @@
+apiVersion: autoscaling/v2
+# Specifies the API version of the HorizontalPodAutoscaler.
+kind: HorizontalPodAutoscaler
+# Defines that this configuration is for a HorizontalPodAutoscaler.
+
+metadata:
+  name: hpadeploymentautoscaler
+  # Assigns a name to the HorizontalPodAutoscaler resource.
+
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hpadeployment
+    # Defines the target Deployment that the HorizontalPodAutoscaler will scale based on.
+
+  minReplicas: 2
+  # Specifies the minimum number of replicas (pods) that the Deployment should have.
+
+  maxReplicas: 5
+  # Specifies the maximum number of replicas (pods) that the Deployment can scale up to.
+
+  metrics:
+  # Specifies the metrics used to determine scaling behavior.
+
+  - type: Resource
+    # Specifies the type of metric, which is Resource (CPU or memory).
+
+    resource:
+      name: cpu
+      # Specifies the resource type, which is CPU.
+
+      target:
+        type: Utilization
+        # Specifies the scaling type based on resource utilization.
+
+        averageUtilization: 40
+        # Sets the target average CPU utilization percentage for autoscaling.
+
+  - type: Resource
+    # Specifies another type of metric, which is Resource (memory).
+
+    resource:
+      name: memory
+      # Specifies the resource type, which is memory.
+
+      target:
+        type: Utilization
+        # Specifies the scaling type based on resource utilization.
+
+        averageUtilization: 40
+        # Sets the target average memory utilization percentage for autoscaling.
